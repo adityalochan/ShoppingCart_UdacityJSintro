@@ -52,8 +52,8 @@ const cart = [];
 
 function  addProductToCart(productId) {
     const product = products.find((product) => product.productId === productId);
-    if (product) {
-        product.quantity += 1;
+    product.quantity += 1;
+    if (!cart.includes(product)) {
         cart.push(product);
     }
 }
