@@ -15,21 +15,21 @@ const products = [
         price: 1.99,
         quantity: 0,
         productId: 1,
-        image: '/images/cherry.jpg'
+        image: './images/cherry.jpg'
     },
     {
         name: 'Orange',
         price: 2.99,
         quantity: 0,
         productId: 2,
-        image: '/images/orange.jpg'
+        image: './images/orange.jpg'
     },
     {
         name: 'Strawberry',
         price: 3.99,
         quantity: 0,
         productId: 3,
-        image: '/images/strawberry.jpg'
+        image: './images/strawberry.jpg'
     }
 ];  
 
@@ -81,8 +81,7 @@ function decreaseQuantity(productId) {
     if (product) {
         product.quantity -= 1;
         if (product.quantity === 0) {
-            const index = cart.findIndex((cartProduct) => cartProduct.productId === productId);
-            cart.splice(index, 1);
+            removeProductFromCart(productId);
         }
     }
 }
@@ -129,12 +128,16 @@ function emptyCart() {
   Hint: cartTotal function gives us cost of all the products in the cart  
 */
 
+let totalPaid = 0;
+
 function pay(amount) {
-    if (cartTotal() > amount) {
-        return amount - cartTotal();
-    } else {
-        return -cartTotal();
+    totalPaid += amount;
+    let remaining = totalPaid - cartTotal();
+    if(remaining >= 0) {
+        totalPaid = 0;
+        emptyCart();
     }
+    return remaining<cartTotal()?-remaining:remaining;
 }
 
 /* Place stand out suggestions here (stand out suggestions can be found at the bottom of the project rubric.)*/
